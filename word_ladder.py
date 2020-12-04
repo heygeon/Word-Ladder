@@ -1,46 +1,35 @@
 import streamlit as st
 from collections import deque
 
-
 class Solution(object):
 
-    def ladderLength(self, beginWord, endWord, wordList):
+    def ladderLength(self, begin, end, list):
         queue = deque()
-        queue.append((beginWord, [beginWord]))
+        queue.append((begin, [begin]))
 
         while queue:
-
             st.sidebar.write("Current queue:", queue)
-
             node, path = queue.popleft()
-
-            st.sidebar.write("Current transformation count:",
-                  len(path))
-
-            for i in self.next_nodes(node, wordList) - set(path):
-                if i == endWord:
-                    st.sidebar.write("Found End Word at path:",
-                          path)
+            st.sidebar.write("Current transformation count:", len(path))
+            for i in self.next_nodes(node, list) - set(path):
+                if i == end:
+                    st.sidebar.write("Found End Word at path:", path)
                     return len(path)
                 else:
                     queue.append((i, path + [i]))
         return 0
 
     def next_nodes(self, word, word_list):
-
         possible_nodes = set()
+        word_length = len(word)
 
-        wl_word_length = len(word)
-
-        for wl_word in word_list:
-            mismatch_count = 0
-
-            for i in range(wl_word_length):
-                if wl_word[i] != word[i]:
-                    mismatch_count += 1
-            if mismatch_count == 1:
-
-                possible_nodes.add(wl_word)
+        for words in word_list:
+            wrong = 0
+            for i in range(word_length):
+                if words[i] != word[i]:
+                    wrong += 1
+            if wrong == 1:
+                possible_nodes.add(words)
 
         st.sidebar.write("Possible next nodes:", possible_nodes)
         return possible_nodes
