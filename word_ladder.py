@@ -13,7 +13,7 @@ class Solution(object):
             st.sidebar.write("Current transformation count:", len(path))
             for i in self.next_nodes(node, list) - set(path):
                 if i == end:
-                    st.sidebar.write("Transformation path:", path)
+                    st.write("Transformation path:", path)
                     return len(path)
                 else:
                     queue.append((i, path + [i]))
